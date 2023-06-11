@@ -1,3 +1,4 @@
+import sys
 import timeit
 import yaml
 
@@ -13,10 +14,11 @@ def from_yaml(arg):
 
 time = timeit.default_timer()
 serialized = to_yaml({"str": "a", "list": [1, 2, 3]})
-serialization_time = timeit.default_timer() - time
+size_of_data = sys.getsizeof(serialized)
+ser_time = timeit.default_timer() - time
 
 time = timeit.default_timer()
 deserialized = from_yaml(serialized)
-deserialization_time = timeit.default_timer() - time
+deser_time = timeit.default_timer() - time
 
-answer('yaml', f'yaml ser/deser time: {serialization_time}, {deserialization_time}\n')
+answer('yaml', f'yaml - {size_of_data} - {ser_time} ms - {deser_time} ms\n')
