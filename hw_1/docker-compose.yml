@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+
+  proxy:
+    container_name: proxy
+    build:
+      dockerfile: proxy/Dockerfile
+    ports:
+      - "2000:2000/udp"
+    environment:
+      - MULTICAST_GROUP
+  
+  apache:
+    container_name: apache
+    build:
+      dockerfile: apache/Dockerfile
+    environment:
+      - MULTICAST_GROUP
+
+  json:
+    container_name: json
+    build:
+      dockerfile: json/Dockerfile
+    environment:
+      - MULTICAST_GROUP
+  
+  message_pack:
+    container_name: message_pack
+    build:
+      dockerfile: message_pack/Dockerfile
+    environment:
+      - MULTICAST_GROUP
+
+  xml:
+    container_name: xml
+    build:
+      dockerfile: xml/Dockerfile
+    environment:
+      - MULTICAST_GROUP
+
+  yaml:
+    container_name: yaml
+    build:
+      dockerfile: yaml/Dockerfile
+    environment:
+      - MULTICAST_GROUP
