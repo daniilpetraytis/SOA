@@ -65,3 +65,6 @@ def get_api_request(view):
 
 def post_api_request(view):
     return require_http_methods(['POST', ])(api_request(view))
+
+def delete_api_request(view):
+    return require_http_methods(['DELETE', ])(api_request(view))

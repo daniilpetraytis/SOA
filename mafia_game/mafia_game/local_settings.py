@@ -3,7 +3,7 @@ import os.path
 from .common_settings import *
 
 SECRET_KEY = 'django-insecure-mdz!^#-x%yayn!@3(c(=80g9jjmmma=el(#tisa!yzrd9=m^2d'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,3 +46,6 @@ for app in MY_APPS:
 LOGGING['loggers'].update(MY_LOGGERS)
 
 DEPLOY_MODE = 'local'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

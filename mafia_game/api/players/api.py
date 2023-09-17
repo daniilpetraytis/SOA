@@ -1,11 +1,22 @@
-from json_api.commands import Redirect, NotFoundError, Error
-from json_api.decorators import get_api_request, post_api_request
+from json_api.commands import NotFoundError, Error
+from json_api.decorators import get_api_request, post_api_request, delete_api_request
 from players.models import Player
 
 
+@post_api_request
+def get_players_list(request, data):
+    try:
+        return Player.objects.filter(nickname__in=data['nicknames']).serialize()
+    except (ValueError, KeyError):
+        raise Error(response_code=404)
+    
 @get_api_request
-def get_players_list(request):
-    return Player.objects.all().serialize()
+def get_all_players_list(request):
+    try:
+        return Player.objects.all().serialize()
+    except (ValueError, KeyError):
+        raise Error(response_code=404)
+
 
 @get_api_request
 def get_player_by_nickname(request, player_nickname):
@@ -60,5 +71,16 @@ def delete_player(request, player_nickname):
     try:
         player = Player.objects.get(nickname=player_nickname)
         player.delete()
+        return "player was successfully deleted"
     except Player.DoesNotExist:
         raise NotFoundError(text=f'Player {player_nickname} is not found')
+
+@get_api_request
+def delete_all_players(request):
+    try:
+        players = Player.objects.all()
+        for player in players:
+            player.delete()
+        return "all players was successfully deleted"
+    except (ValueError, KeyError):
+        raise Error(response_code=404)
